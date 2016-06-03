@@ -47,6 +47,22 @@ class AdminCustomersController extends AdminCustomersControllerCore
 
     }
 
+    public function setMedia()
+    {
+        parent::setMedia();
+
+        if(Tools::isSubmit('id_customer'))
+        {
+            //add id_customer to js script
+            Media::addJsDef(array(
+                'customer_login_link' => $this->context->link->getModuleLink('customer_login', 'login', array('id_customer' => Tools::getValue('id_customer'))),
+            ));
+            Media::addJsDefL('customer_login', $this->l('Login'));
+
+            $this->addJS(_PS_MODULE_DIR_ . 'customer_login/views/js/customer_login_admin.js');
+        }
+    }
+
     public function customerLogIn($params, $row)
     {
 
